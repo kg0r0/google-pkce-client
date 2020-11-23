@@ -1,0 +1,25 @@
+{
+  "name": "google-pkce-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kg0r0/google-pkce-client.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kg0r0/google-pkce-client/issues"
+  },
+  "homepage": "https://github.com/kg0r0/google-pkce-client#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cookie-session": "^1.4.0",
+    "express": "^4.17.1",
+    "openid-client": "^4.2.1"
+  }
+}
