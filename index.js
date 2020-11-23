@@ -46,11 +46,10 @@ app.get('/cb', async (req, res, next) => {
     const state = req.session.state;
     const code_verifier = req.session.code_verifier;
     const params = client.callbackParams(req);
-    const tokenSet = await client.callback(req, params, { code_verifier, state });
+    const tokenSet = await client.callback(config.redirect_uri, params, { code_verifier, state });
     console.log('received and validated tokens %j', tokenSet);
     console.log('validated ID Token claims %j', tokenSet.claims());
     return res.send('ok!');
-
   })().catch(next);
 })
 
@@ -60,7 +59,7 @@ app.listen(3000, async () => {
   client = new googleIssuer.Client({
     client_id: config.client_id,
     client_secret: config.client_secret,
-    redirect_uris: ['http://localhost:3000/cb'],
+    redirect_uris: [config.redirect_uri],
     response_types: ['code'],
     // id_token_signed_response_alg (default "RS256")
     // token_endpoint_auth_method (default "client_secret_basic")
