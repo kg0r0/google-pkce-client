@@ -34,6 +34,7 @@ app.get('/', (req, res, next) => {
     });
     req.session.state = state;
     req.session.code_verifier = code_verifier;
+    req.session.originalUrl = req.originalUrl;
     return res.redirect(url);
   })().catch(next);
 });
@@ -49,7 +50,8 @@ app.get('/cb', async (req, res, next) => {
     const tokenSet = await client.callback(config.redirect_uri, params, { code_verifier, state });
     console.log('received and validated tokens %j', tokenSet);
     console.log('validated ID Token claims %j', tokenSet.claims());
-    return res.send('ok!');
+    req.session.loggedIn = true;
+    return res.redirect(req.session.originalUrl);
   })().catch(next);
 })
 
