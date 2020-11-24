@@ -21,7 +21,7 @@ app.use(cookieParser())
 app.get('/', (req, res, next) => {
   (async () => {
     if (req.session.loggedIn) {
-      return res.send("ok!")
+      return res.send("OK!")
     }
     const state = generators.state();
     const code_verifier = generators.codeVerifier();
@@ -39,10 +39,10 @@ app.get('/', (req, res, next) => {
   })().catch(next);
 });
 
-app.get('/cb', async (req, res, next) => {
+app.get('/cb', (req, res, next) => {
   (async () => {
     if (!req.session) {
-      return res.status(403).send('failed');
+      return res.status(403).send('NG');
     }
     const state = req.session.state;
     const code_verifier = req.session.code_verifier;
