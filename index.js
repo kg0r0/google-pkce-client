@@ -21,7 +21,7 @@ app.use(cookieParser())
 app.get('/', (req, res, next) => {
   (async () => {
     if (req.session.loggedIn) {
-      return res.send("OK!")
+      return res.send('OK!');
     }
     const state = generators.state();
     const code_verifier = generators.codeVerifier();
