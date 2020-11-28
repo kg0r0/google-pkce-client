@@ -26,15 +26,18 @@ app.get('/', (req, res, next) => {
     const state = generators.state();
     const code_verifier = generators.codeVerifier();
     const code_challenge = generators.codeChallenge(code_verifier);
+    const nonce = generators.nonce();
     const url = client.authorizationUrl({
       scope: 'openid',
       state,
       code_challenge,
       code_challenge_method: 'S256',
+      nonce,
     });
     req.session.state = state;
     req.session.code_verifier = code_verifier;
     req.session.originalUrl = req.originalUrl;
+    req.session.nonce = nonce;
     return res.redirect(url);
   })().catch(next);
 });
@@ -46,8 +49,9 @@ app.get('/cb', (req, res, next) => {
     }
     const state = req.session.state;
     const code_verifier = req.session.code_verifier;
+    const nonce = req.session.nonce;
     const params = client.callbackParams(req);
-    const tokenSet = await client.callback(config.redirect_uri, params, { code_verifier, state });
+    const tokenSet = await client.callback(config.redirect_uri, params, { code_verifier, state, nonce });
     console.log('received and validated tokens %j', tokenSet);
     console.log('validated ID Token claims %j', tokenSet.claims());
     req.session.loggedIn = true;
