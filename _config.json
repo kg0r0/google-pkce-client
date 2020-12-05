@@ -1,5 +1,0 @@
-{
-  "client_id": "<YOUR CLIENT_ID>",
-  "client_secret": "<YOUR CLIENT_SECRET>",
-  "redirect_uri": "http://localhost:3000/cb"
-}
